@@ -345,6 +345,12 @@ public final class AppConfigBean {
     private String twitterToken;
     private String twitterTokenSecret;
 
+
+    /** 開発者オプション-PostFieldの保存 */
+    private boolean storePostField;
+    public boolean isStorePostField() { return this.storePostField; }
+    public void setStorePostField(boolean storePostField) { this.storePostField = storePostField; }
+
     private static RGB cloneRGB(RGB rgb) {
         return new RGB(rgb.red, rgb.green, rgb.blue);
     }

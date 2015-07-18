@@ -984,6 +984,11 @@ public final class ConfigDialog extends Dialog {
         btnTest.setText("航海日誌開発者向けメニューを追加する*");
         btnTest.setSelection(AppConfig.get().isEnableTestWindow());
 
+        final Button btnPostField = new Button(compositeDevelopment, SWT.CHECK);
+        btnPostField.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        btnPostField.setText("Request PostFieldを保存する");
+        btnPostField.setSelection(AppConfig.get().isStorePostField());
+
         Composite commandComposite = new Composite(this.shell, SWT.NONE);
         commandComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout glCommandComposite = new GridLayout(2, false);
@@ -1149,6 +1154,7 @@ public final class ConfigDialog extends Dialog {
                 AppConfig.get().setStoreJson(btnJson.getSelection());
                 AppConfig.get().setStoreJsonPath(new File(jsonpath.getText()).getAbsolutePath());
                 AppConfig.get().setEnableTestWindow(btnTest.getSelection());
+                AppConfig.get().setStorePostField(btnPostField.getSelection());
                 try {
                     AppConfig.store();
                 } catch (IOException ex) {

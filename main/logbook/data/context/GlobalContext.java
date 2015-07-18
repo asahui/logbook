@@ -26,6 +26,7 @@ import javax.json.JsonValue;
 import logbook.config.AppConfig;
 import logbook.config.UserDataConfig;
 import logbook.constants.AppConstants;
+import logbook.data.ActionData;
 import logbook.data.Data;
 import logbook.data.EventListener;
 import logbook.dto.BasicInfoDto;
@@ -590,6 +591,11 @@ public final class GlobalContext {
             doStoreJson(data);
         }
 
+        //doStorePostField(data);
+        if (AppConfig.get().isStorePostField()) {
+            doStorePostField(data);
+        }
+
         switch (data.getDataType()) {
         // 補給
         case CHARGE:
@@ -626,6 +632,8 @@ public final class GlobalContext {
         // 資材
         case MATERIAL:
             doMaterial(data);
+            break;
+        case MISSION_START:
             break;
         // 遠征(帰還)
         case MISSION_RESULT:
@@ -839,6 +847,27 @@ public final class GlobalContext {
             LOG.get().warn(data);
         }
 
+    }
+
+    /**
+     * HTTP Post Field Store
+     * @param data
+     */
+    private static void doStorePostField(Data data) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss.SSS");
+            Date time = Calendar.getInstance().getTime();
+            String fname = new StringBuilder().append(format.format(time)).append("_").append(data.getDataType())
+                    .append(".txt").toString();
+            File file = new File(FilenameUtils.concat(AppConfig.get().getStoreJsonPath(), fname));
+            if (data instanceof ActionData && ((ActionData) data).getPostField() != null) {
+                FileUtils.write(file, ((ActionData) data).getPostField().toString(), Charset.forName("UTF-8"));
+            }
+
+        } catch (IOException e) {
+            LOG.get().warn("PostField Fileを保存するに失敗しました", e);
+            LOG.get().warn(data);
+        }
     }
 
     /**

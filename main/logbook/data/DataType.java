@@ -93,6 +93,8 @@ public enum DataType {
     MAPINFO("/kcsapi/api_get_member/mapinfo"),
     /** 遠征情報 */
     MISSION("/kcsapi/api_get_member/mission"),
+    /** 遠征開始 */
+    MISSION_START("/kcsapi/api_req_mission/start"),
     /** 演習情報 */
     PRACTICE("/kcsapi/api_get_member/practice"),
     /** 演習情報 */

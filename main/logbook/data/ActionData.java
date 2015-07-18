@@ -51,4 +51,8 @@ public final class ActionData extends AbstractDto implements Data {
         return null;
     }
 
+    public Map<String, String> getPostField() {
+        return this.postField;
+    }
+
 }
